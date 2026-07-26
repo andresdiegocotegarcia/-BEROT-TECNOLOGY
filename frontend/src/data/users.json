@@ -1,4 +1,0 @@
-[
-  {"id": 1, "nombre": "Admin BEROT", "email": "admin@berot.com", "password": "admin123", "rol": "administrador"},
-  {"id": 2, "nombre": "Pedro Técnico", "email": "pedro@berot.com", "password": "tecnico123", "rol": "tecnico"}
-]
