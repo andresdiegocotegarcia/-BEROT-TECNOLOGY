@@ -131,3 +131,30 @@
   padding: 0.4rem 0.75rem;
   min-height: unset;
 }
+
+/* Mobile: client actions stack and use proper touch targets */
+@media (max-width: 767px) {
+  .client-actions {
+    flex-direction: column;
+  }
+
+  .client-actions .btn {
+    min-height: var(--touch-target);
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .client-edit-actions {
+    flex-direction: column;
+  }
+
+  .client-edit-actions .btn {
+    min-height: var(--touch-target);
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .client-edit-form input {
+    min-height: var(--touch-target);
+  }
+}

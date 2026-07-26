@@ -5,7 +5,7 @@ import Button from '../components/Button';
 import PhotoUpload from '../components/PhotoUpload';
 import './NewOrder.css';
 
-function NewOrder({ clients, orders, onAddOrder, onAddClient }) {
+function NewOrder({ clients, orders, onAddOrder, onAddClient, showToast }) {
   const navigate = useNavigate();
 
   const [selectedClient, setSelectedClient] = useState('');
@@ -149,7 +149,7 @@ function NewOrder({ clients, orders, onAddOrder, onAddClient }) {
     if (result) {
       navigate('/dashboard');
     } else {
-      alert('Error al crear la orden. Verifica que el servidor esté corriendo.');
+      showToast('Error al crear la orden. Verifica que el servidor esté corriendo.', 'error');
     }
   };
 

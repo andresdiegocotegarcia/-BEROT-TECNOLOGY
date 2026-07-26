@@ -74,6 +74,19 @@
 
 /* --- Media Queries --- */
 
+/* Mobile: <768px - tighter padding, prevent horizontal overflow */
+@media (max-width: 767px) {
+  .app-main {
+    padding: var(--spacing-md) var(--spacing-sm);
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-footer {
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+}
+
 /* Tablet: 768px a 1023px */
 @media (min-width: 768px) {
   .app-main {

@@ -10,7 +10,7 @@ function Footer() {
           BEROT TECNOLOGY &copy; {currentYear} - Sistema de Gestión de Reparaciones
         </p>
         <p className="footer-credits">
-          Proyecto Diplomado Full Stack
+          Todos los derechos reservados
         </p>
       </div>
     </footer>

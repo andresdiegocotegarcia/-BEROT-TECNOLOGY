@@ -1,14 +1,14 @@
 -- ============================================
--- CeluFix - Base de Datos PostgreSQL
+-- BEROT TECNOLOGY - Base de Datos PostgreSQL
 -- Sistema de Gestión de Taller de Reparación
 -- ============================================
 
 -- Crear la base de datos
-DROP DATABASE IF EXISTS celufix_db;
-CREATE DATABASE celufix_db;
+DROP DATABASE IF EXISTS berot_db;
+CREATE DATABASE berot_db;
 
 -- Conectar a la base de datos
-\c celufix_db;
+\c berot_db;
 
 -- ============================================
 -- TABLAS
@@ -66,8 +66,8 @@ CREATE TABLE ordenes (
 
 -- Usuarios del sistema
 INSERT INTO usuarios (nombre, email, password, rol) VALUES
-  ('Admin CeluFix', 'admin@celufix.com', 'admin123', 'administrador'),
-  ('Pedro Técnico', 'pedro@celufix.com', 'tecnico123', 'tecnico');
+  ('Admin BEROT', 'admin@berot.com', 'admin123', 'administrador'),
+  ('Pedro Técnico', 'pedro@berot.com', 'tecnico123', 'tecnico');
 
 -- Clientes
 INSERT INTO clientes (nombre, cedula, telefono, email) VALUES

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import AnimatedBackground from './components/AnimatedBackground';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ToastContainer from './components/Toast';
 import ProtectedRoute from './components/ProtectedRoute';
 import AuthRedirectRoute from './components/AuthRedirectRoute';
 import Home from './pages/Home';
@@ -13,6 +14,7 @@ import NewOrder from './pages/NewOrder';
 import OrderDetail from './pages/OrderDetail';
 import Clients from './pages/Clients';
 import About from './pages/About';
+import { useToast } from './hooks/useToast';
 import './App.css';
 
 const API_URL = 'http://localhost:4000/api';
@@ -46,6 +48,7 @@ const uploadPhotos = async (base64Photos) => {
 
 function AppContent() {
   const navigate = useNavigate();
+  const { toasts, showToast, removeToast } = useToast();
 
   // Estado global
   const [clients, setClients] = useState([]);
@@ -159,6 +162,8 @@ function AppContent() {
 
       const newOrder = await res.json();
       setOrders((prev) => [newOrder, ...prev]);
+      // Recargar todos los datos para asegurar sincronización
+      await fetchData();
       return newOrder;
     } catch (err) {
       console.error('Error creando orden:', err);
@@ -258,6 +263,7 @@ function AppContent() {
   return (
     <div className="app">
       <AnimatedBackground />
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
       <Navbar
         isAuthenticated={isAuthenticated}
         userName={currentUser ? currentUser.nombre : ''}
@@ -305,6 +311,7 @@ function AppContent() {
                   orders={orders}
                   onAddOrder={addOrder}
                   onAddClient={addClient}
+                  showToast={showToast}
                 />
               </ProtectedRoute>
             }
@@ -313,7 +320,7 @@ function AppContent() {
             path="/orden/:id"
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated}>
-                <OrderDetail orders={orders} onUpdateOrder={updateOrder} onDeleteOrder={deleteOrder} />
+                <OrderDetail orders={orders} onUpdateOrder={updateOrder} onDeleteOrder={deleteOrder} showToast={showToast} />
               </ProtectedRoute>
             }
           />

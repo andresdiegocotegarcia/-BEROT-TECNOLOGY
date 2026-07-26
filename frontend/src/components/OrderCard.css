@@ -75,3 +75,30 @@
   color: #64748b;
   margin-bottom: 0;
 }
+
+/* ============================================
+   Responsive - Mobile (<768px)
+   ============================================ */
+@media (max-width: 767px) {
+  .order-card {
+    padding: var(--spacing-md);
+    border-radius: 12px;
+    min-height: var(--touch-target);
+  }
+
+  .order-card-header {
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+
+  .order-card-numero {
+    font-size: var(--font-size-base);
+  }
+}
+
+/* Responsive - Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .order-card {
+    padding: var(--spacing-lg);
+  }
+}

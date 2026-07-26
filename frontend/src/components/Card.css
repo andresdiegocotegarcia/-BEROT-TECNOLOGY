@@ -18,3 +18,29 @@
   border-color: rgba(0, 212, 255, 0.3);
   box-shadow: 0 8px 40px rgba(0, 212, 255, 0.12);
 }
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+/* Mobile: reduce padding for tighter screens */
+@media (max-width: 767px) {
+  .card {
+    padding: var(--spacing-md);
+    border-radius: 12px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .card {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card {
+    padding: var(--spacing-xl);
+  }
+}

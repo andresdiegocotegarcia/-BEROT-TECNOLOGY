@@ -1,125 +1,290 @@
-# CeluFix - Sistema de Gestión de Taller de Reparación de Celulares
+# BEROT TECNOLOGY - Sistema de Gestión de Taller de Reparación
 
-CeluFix es una aplicación web para la gestión integral de un taller de reparación de celulares. Permite a técnicos y administradores registrar clientes, recepcionar equipos, dar seguimiento al estado de las reparaciones y registrar entregas.
+## Descripción
 
-Este proyecto opera exclusivamente con datos locales (sin backend), como parte de un proyecto académico Full Stack.
-
-## Instalación y Ejecución
-
-### Requisitos Previos
-
-- Node.js (v18 o superior)
-- npm
-
-### Pasos
-
-```bash
-# 1. Navegar al directorio del proyecto
-cd celufix
-
-# 2. Instalar dependencias
-npm install
-
-# 3. Ejecutar en modo desarrollo
-npm run dev
-
-# 4. (Opcional) Construir para producción
-npm run build
-
-# 5. (Opcional) Previsualizar la build de producción
-npm run preview
-```
-
-La aplicación estará disponible en `http://localhost:5173` (modo desarrollo).
-
-## Credenciales de Prueba
-
-| Usuario | Email | Contraseña | Rol |
-|---------|-------|------------|-----|
-| Admin CeluFix | admin@celufix.com | admin123 | Administrador |
-| Pedro Técnico | pedro@celufix.com | tecnico123 | Técnico |
-
-## Estructura del Proyecto
-
-```
-celufix/
-├── public/                  # Archivos estáticos
-├── src/
-│   ├── components/          # Componentes reutilizables
-│   │   ├── AuthRedirectRoute.jsx   # Redirige a Dashboard si ya autenticado
-│   │   ├── Button.jsx              # Botón con variantes (primary, secondary, danger)
-│   │   ├── Card.jsx                # Contenedor visual reutilizable
-│   │   ├── Footer.jsx              # Pie de página
-│   │   ├── FormInput.jsx           # Input de formulario con validación
-│   │   ├── Navbar.jsx              # Barra de navegación responsiva
-│   │   ├── OrderCard.jsx           # Tarjeta resumen de orden
-│   │   ├── ProtectedRoute.jsx      # Protección de rutas autenticadas
-│   │   └── StatusBadge.jsx         # Badge de estado con colores
-│   ├── data/                # Datos locales (JSON)
-│   │   ├── clients.json            # Clientes de ejemplo
-│   │   ├── orders.json             # Órdenes de ejemplo
-│   │   └── users.json              # Usuarios del sistema
-│   ├── pages/               # Páginas de la aplicación
-│   │   ├── About.jsx               # Acerca del proyecto
-│   │   ├── Clients.jsx             # Listado de clientes
-│   │   ├── Dashboard.jsx           # Panel con todas las órdenes
-│   │   ├── Home.jsx                # Página de inicio
-│   │   ├── Login.jsx               # Inicio de sesión
-│   │   ├── NewOrder.jsx            # Formulario de nueva orden
-│   │   ├── OrderDetail.jsx         # Detalle y gestión de orden
-│   │   └── Register.jsx            # Registro de usuarios
-│   ├── App.jsx              # Componente raíz (estado global y rutas)
-│   ├── App.css              # Estilos generales de la app
-│   ├── main.jsx             # Punto de entrada
-│   └── index.css            # Estilos base
-├── index.html               # HTML principal
-├── package.json             # Dependencias y scripts
-└── vite.config.js           # Configuración de Vite
-```
-
-## Rutas de la Aplicación
-
-| Ruta | Página | Acceso |
-|------|--------|--------|
-| `/` | Home | Público |
-| `/login` | Login | Público (redirige a Dashboard si autenticado) |
-| `/register` | Register | Público (redirige a Dashboard si autenticado) |
-| `/dashboard` | Dashboard | Protegida |
-| `/nueva-orden` | Nueva Orden | Protegida |
-| `/orden/:id` | Detalle de Orden | Protegida |
-| `/clientes` | Clientes | Protegida |
-| `/about` | Acerca de | Público |
-
-## Flujo de Estados de Orden
-
-```
-en_espera → en_reparación → listo → entregado
-```
-
-- **En espera**: Orden recibida, campos técnicos deshabilitados.
-- **En reparación**: Se habilitan diagnóstico, repuestos, procedimiento y costo.
-- **Listo**: Reparación completada, pendiente de entrega.
-- **Entregado**: Requiere condiciones de entrega, se asigna fecha automáticamente.
+Sistema web Full Stack para la gestión de un taller de reparación de celulares. Permite registrar clientes, crear órdenes de reparación con seguimiento de estados, documentar condiciones del equipo con fotos, y gestionar el flujo completo de trabajo desde la recepción hasta la entrega.
 
 ## Tecnologías Utilizadas
 
+### Frontend
 - **React 18** - Biblioteca de interfaces de usuario
-- **Vite 5** - Herramienta de construcción y servidor de desarrollo
-- **React Router DOM 6** - Navegación SPA (Single Page Application)
-- **CSS puro** - Estilos con media queries para diseño responsivo
-- **JavaScript (ES6+)** - Lógica de la aplicación
+- **Vite 5** - Herramienta de desarrollo y empaquetado
+- **React Router v6** - Navegación SPA (Single Page Application)
+- **CSS** - Estilos personalizados con diseño responsive
 
-## Características Principales
+### Backend
+- **Node.js** - Entorno de ejecución
+- **Express.js 4** - Framework HTTP para API REST
+- **Sequelize 6** - ORM (Object-Relational Mapping)
+- **express-validator** - Validación de datos en servidor
+- **dotenv** - Gestión de variables de entorno
 
-- Autenticación simulada con datos locales
-- Protección de rutas según estado de autenticación
-- Formularios con validación en tiempo real
-- Diseño responsivo (escritorio, tablet y móvil)
-- Filtrado y búsqueda de órdenes y clientes
-- Gestión completa del ciclo de vida de una reparación
-- Componentes reutilizables con props
+### Base de Datos
+- **PostgreSQL** - Sistema gestor de bases de datos relacional
 
-## Notas Importantes
+## Arquitectura del Sistema
 
-- Los datos se almacenan en memoria durante la sesión. Al recargar la página, los datos vuelven a su estado inicial (cargados desde los archivos JSON).
-- No se requiere backend ni base de datos para ejecutar la aplicación.
+El proyecto sigue una **arquitectura por capas** en el backend y una **arquitectura basada en componentes** en el frontend.
+
+### Estructura del Backend
+
+```
+backend/
+├── config/
+│   └── database.js          # Configuración de Sequelize
+├── models/
+│   ├── index.js             # Inicialización y asociaciones
+│   ├── Usuario.js           # Modelo de usuarios
+│   ├── Cliente.js           # Modelo de clientes
+│   └── Orden.js             # Modelo de órdenes
+├── controllers/
+│   ├── authController.js    # Lógica de autenticación
+│   ├── clienteController.js # CRUD de clientes
+│   ├── ordenController.js   # CRUD de órdenes
+│   └── uploadController.js  # Subida de imágenes
+├── routes/
+│   ├── index.js             # Agregador de rutas
+│   ├── authRoutes.js        # Rutas de autenticación
+│   ├── clienteRoutes.js     # Rutas de clientes
+│   ├── ordenRoutes.js       # Rutas de órdenes
+│   └── uploadRoutes.js      # Rutas de subida
+├── middlewares/
+│   ├── errorHandler.js      # Manejador de errores centralizado
+│   └── validators/
+│       ├── helpers.js       # Utilidades de validación
+│       ├── authValidator.js
+│       ├── clienteValidator.js
+│       └── ordenValidator.js
+├── uploads/                 # Fotos subidas
+├── database/
+│   └── init.sql             # Script de inicialización
+├── server.js                # Punto de entrada
+├── .env                     # Variables de entorno
+└── package.json
+```
+
+### Estructura del Frontend
+
+```
+frontend/
+├── src/
+│   ├── components/              # Componentes reutilizables
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Card.jsx
+│   │   ├── Button.jsx
+│   │   ├── FormInput.jsx
+│   │   ├── Loader.jsx
+│   │   ├── Toast.jsx
+│   │   ├── OrderCard.jsx
+│   │   ├── PhotoUpload.jsx
+│   │   ├── StatusBadge.jsx
+│   │   ├── ProtectedRoute.jsx
+│   │   └── AnimatedBackground.jsx
+│   ├── pages/                   # Páginas de la aplicación
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── NewOrder.jsx
+│   │   ├── OrderDetail.jsx
+│   │   ├── Clients.jsx
+│   │   └── About.jsx
+│   ├── hooks/
+│   │   └── useToast.js          # Hook para notificaciones
+│   ├── data/                    # Datos estáticos
+│   ├── App.jsx                  # Componente principal
+│   ├── App.css
+│   ├── main.jsx                 # Punto de entrada
+│   └── index.css
+├── public/
+├── index.html
+├── vite.config.js
+└── package.json
+```
+
+## Modelo Relacional
+
+### Diagrama de Entidad-Relación
+
+```
+┌─────────────┐          ┌─────────────────────────────────┐
+│  USUARIOS   │          │           ORDENES               │
+├─────────────┤          ├─────────────────────────────────┤
+│ id (PK)     │          │ id (PK)                         │
+│ nombre      │          │ numero_orden (UNIQUE)           │
+│ email (UQ)  │          │ cliente_id (FK → clientes.id)   │
+│ password    │          │ cliente_nombre                  │
+│ rol         │          │ marca, modelo, color, imei      │
+│ created_at  │          │ condiciones_ingreso             │
+└─────────────┘          │ accesorios                      │
+                         │ motivo_reparacion               │
+┌─────────────┐          │ contrasena_equipo               │
+│  CLIENTES   │──────┐   │ fecha_recepcion                 │
+├─────────────┤      │   │ estado                          │
+│ id (PK)     │      │   │ diagnostico, repuestos          │
+│ nombre      │      │   │ procedimiento, costo            │
+│ cedula (UQ) │      └──▶│ fecha_entrega                   │
+│ telefono    │  1:N     │ condiciones_entrega             │
+│ email       │          │ fotos_recepcion, fotos_entrega  │
+│ created_at  │          │ created_at, updated_at          │
+└─────────────┘          └─────────────────────────────────┘
+```
+
+### Relaciones
+- **Clientes → Órdenes**: Un cliente puede tener muchas órdenes (1:N). Si se elimina un cliente, las órdenes mantienen el nombre pero `cliente_id` se establece en NULL (ON DELETE SET NULL).
+
+### Diccionario de Datos
+
+| Tabla | Campo | Tipo | Restricción |
+|-------|-------|------|-------------|
+| usuarios | id | SERIAL | PRIMARY KEY |
+| usuarios | nombre | VARCHAR(100) | NOT NULL |
+| usuarios | email | VARCHAR(150) | UNIQUE, NOT NULL |
+| usuarios | password | VARCHAR(255) | NOT NULL |
+| usuarios | rol | VARCHAR(20) | CHECK (administrador, tecnico) |
+| clientes | id | SERIAL | PRIMARY KEY |
+| clientes | nombre | VARCHAR(100) | NOT NULL |
+| clientes | cedula | VARCHAR(20) | UNIQUE, NOT NULL |
+| clientes | telefono | VARCHAR(20) | NOT NULL |
+| clientes | email | VARCHAR(150) | NULLABLE |
+| ordenes | id | SERIAL | PRIMARY KEY |
+| ordenes | numero_orden | VARCHAR(20) | UNIQUE, NOT NULL |
+| ordenes | cliente_id | INTEGER | FK → clientes(id) |
+| ordenes | estado | VARCHAR(20) | CHECK (en_espera, en_reparacion, listo, entregado) |
+| ordenes | costo | DECIMAL(10,2) | NULLABLE |
+| ordenes | fotos_recepcion | TEXT[] | DEFAULT '{}' |
+| ordenes | fotos_entrega | TEXT[] | DEFAULT '{}' |
+
+## Diseño de la API REST
+
+### Endpoints
+
+| Método | Ruta | Descripción | Parámetros |
+|--------|------|-------------|------------|
+| POST | /api/auth/login | Iniciar sesión | email, password |
+| POST | /api/auth/register | Registrar usuario | nombre, email, password |
+| GET | /api/clientes | Listar todos los clientes | — |
+| POST | /api/clientes | Crear cliente | nombre, cedula, telefono, email |
+| PUT | /api/clientes/:id | Actualizar cliente | nombre, cedula, telefono, email |
+| DELETE | /api/clientes/:id | Eliminar cliente | — |
+| GET | /api/ordenes | Listar todas las órdenes | — |
+| GET | /api/ordenes/:id | Obtener orden por ID | — |
+| POST | /api/ordenes | Crear orden de reparación | cliente_nombre, marca, modelo, condiciones_ingreso, motivo_reparacion |
+| PUT | /api/ordenes/:id | Actualizar orden | estado, diagnostico, repuestos, etc. |
+| DELETE | /api/ordenes/:id | Eliminar orden | — |
+| POST | /api/upload | Subir imágenes (base64) | images[] |
+| GET | /api/health | Estado del servidor | — |
+
+### Respuestas Esperadas
+
+**Éxito en login:**
+```json
+{ "success": true, "user": { "nombre": "...", "email": "...", "rol": "..." } }
+```
+
+**Error de validación (400):**
+```json
+{ "error": "Error de validación", "details": [{ "field": "email", "message": "..." }] }
+```
+
+**Recurso no encontrado (404):**
+```json
+{ "error": "Orden no encontrada" }
+```
+
+## Instalación y Configuración
+
+### Prerrequisitos
+- Node.js 18 o superior
+- PostgreSQL 14 o superior (pgAdmin4 recomendado)
+- npm
+
+### 1. Clonar el repositorio
+```bash
+git clone <url-del-repositorio>
+cd "BEROT TECNOLOGY"
+```
+
+### 2. Configurar la base de datos
+1. Abrir pgAdmin4
+2. Ejecutar el script `backend/database/init.sql` para crear la base de datos y tablas
+
+### 3. Configurar el backend
+```bash
+cd backend
+npm install
+```
+
+Crear archivo `.env` (o copiar `.env.example`):
+```
+DB_NAME=celufix_db
+DB_USER=postgres
+DB_PASSWORD=tu_contraseña
+DB_HOST=localhost
+DB_PORT=5432
+PORT=4000
+NODE_ENV=development
+```
+
+### 4. Configurar el frontend
+```bash
+cd ../frontend
+npm install
+```
+
+### 5. Ejecutar el proyecto
+
+**Terminal 1 - Backend:**
+```bash
+cd backend
+npm run dev
+```
+
+**Terminal 2 - Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+
+La aplicación estará disponible en:
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:4000
+
+### Credenciales por defecto
+- **Admin**: admin@berot.com / admin123
+- **Técnico**: pedro@berot.com / tecnico123
+
+## Patrón Arquitectónico
+
+El backend implementa el patrón **MVC adaptado para API REST**:
+
+- **Rutas (Routes)**: Definen los endpoints y conectan validadores con controladores
+- **Controladores (Controllers)**: Manejan la lógica de peticiones HTTP y delegan al modelo
+- **Modelos (Models)**: Definen la estructura de datos y relaciones usando Sequelize ORM
+- **Middlewares**: Manejan preocupaciones transversales (validación, manejo de errores)
+- **Configuración (Config)**: Gestiona la conexión a base de datos y variables de entorno
+
+### Ventajas de esta arquitectura:
+- **Separación de responsabilidades**: Cada capa tiene una función clara
+- **Mantenibilidad**: Cambios en una capa no afectan las demás
+- **Testabilidad**: Cada componente puede probarse de forma aislada
+- **Escalabilidad**: Fácil agregar nuevas funcionalidades
+
+## Funcionalidades
+
+- ✅ Autenticación (Login/Registro)
+- ✅ CRUD completo de Clientes
+- ✅ CRUD completo de Órdenes de Reparación
+- ✅ Seguimiento de estados (En espera → En reparación → Listo → Entregado)
+- ✅ Subida de fotos del equipo
+- ✅ Dashboard con búsqueda y filtros
+- ✅ Diseño responsive (móvil, tablet, desktop)
+- ✅ Validaciones en cliente y servidor
+- ✅ Manejo de errores centralizado
+- ✅ Componente de notificaciones (Toast)
+- ✅ Indicador de carga (Loader)
+
+## Autor
+
+BEROT TECNOLOGY

@@ -11,8 +11,7 @@ function About() {
   ];
 
   const equipo = [
-    { nombre: 'Estudiante Diplomado Full Stack', rol: 'Desarrollador Frontend' },
-    { nombre: 'Estudiante Diplomado Full Stack', rol: 'Diseño UI/UX' },
+    { nombre: 'BEROT TECNOLOGY', rol: 'Desarrollo & Gestión' },
   ];
 
   return (
@@ -24,8 +23,8 @@ function About() {
           <h2 className="about-section-title">Sobre el Proyecto</h2>
           <p className="about-description">
             BEROT TECNOLOGY es un sistema web de gestión para un taller de reparación de celulares y computadores.
-            Fue desarrollado como parte del Diplomado Full Stack, representando la primera fase
-            del proyecto enfocada en el frontend con datos locales.
+            Desarrollado como una herramienta interna para administrar el negocio de forma eficiente,
+            cubriendo todo el ciclo de vida de las reparaciones.
           </p>
           <p className="about-description">
             El sistema permite a los técnicos gestionar órdenes de reparación, registrar clientes,
