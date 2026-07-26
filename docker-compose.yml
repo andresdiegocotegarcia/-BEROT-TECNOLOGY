@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: berot_db
+      DB_USER: berot
+      DB_PASSWORD: berot123
+      DATABASE_URL: postgres://berot:berot123@db:5432/berot_db
+      RUN_MIGRATIONS: "true"
+      CORS_ORIGINS: http://localhost:5173,http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: berot_db
+      POSTGRES_USER: berot
+      POSTGRES_PASSWORD: berot123
+    ports:
+      - "5432:5432"
+    volumes:
+      - berot_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U berot -d berot_db"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  berot_pg:
