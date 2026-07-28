@@ -285,6 +285,10 @@ El backend implementa el patrón **MVC adaptado para API REST**:
 - ✅ Componente de notificaciones (Toast)
 - ✅ Indicador de carga (Loader)
 
-## Autor
+## Equipo de Desarrollo
+
+- **Nataly Dayana Medina Becerra**
+- **Diego Andrés Garcia Cote**
+- **Kevin Jean Pierre Diaz Llanez**
 
 BEROT TECNOLOGY

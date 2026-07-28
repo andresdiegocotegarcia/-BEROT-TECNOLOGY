@@ -3,15 +3,19 @@ import './About.css';
 
 function About() {
   const tecnologias = [
-    { icono: '⚛️', nombre: 'React', descripcion: 'Biblioteca para interfaces de usuario' },
-    { icono: '⚡', nombre: 'Vite', descripcion: 'Herramienta de desarrollo rápida' },
-    { icono: '🔀', nombre: 'React Router DOM', descripcion: 'Navegación SPA' },
-    { icono: '🎨', nombre: 'CSS Puro', descripcion: 'Estilos personalizados sin frameworks' },
-    { icono: '📦', nombre: 'JSON Local', descripcion: 'Datos de demostración' },
+    { icono: '⚛️', nombre: 'React 18', descripcion: 'Biblioteca para interfaces de usuario' },
+    { icono: '⚡', nombre: 'Vite 5', descripcion: 'Herramienta de desarrollo rápida' },
+    { icono: '🔀', nombre: 'React Router v6', descripcion: 'Navegación SPA' },
+    { icono: '🟢', nombre: 'Node.js + Express', descripcion: 'Backend API REST' },
+    { icono: '🗃️', nombre: 'Sequelize', descripcion: 'ORM para PostgreSQL' },
+    { icono: '🐘', nombre: 'PostgreSQL', descripcion: 'Base de datos relacional' },
+    { icono: '🎨', nombre: 'CSS Responsive', descripcion: 'Estilos personalizados adaptables' },
   ];
 
   const equipo = [
-    { nombre: 'BEROT TECNOLOGY', rol: 'Desarrollo & Gestión' },
+    { nombre: 'Nataly Dayana Medina Becerra', rol: 'Desarrolladora Full Stack' },
+    { nombre: 'Diego Andrés Garcia Cote', rol: 'Desarrollador Full Stack' },
+    { nombre: 'Kevin Jean Pierre Diaz Llanez', rol: 'Desarrollador Full Stack' },
   ];
 
   return (

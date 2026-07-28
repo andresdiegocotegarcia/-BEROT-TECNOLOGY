@@ -8,13 +8,11 @@ export class AppError extends Error {
 }
 
 export const errorHandler = (err, req, res, next) => {
-  // Log the error for debugging
   console.error(`[ERROR] ${err.statusCode || 500} - ${err.message}`);
   if (process.env.NODE_ENV === 'development') {
     console.error(err.stack);
   }
 
-  // Handle Sequelize UniqueConstraintError
   if (err.name === 'SequelizeUniqueConstraintError') {
     const field = err.errors?.[0]?.path || 'campo';
     return res.status(409).json({
@@ -22,7 +20,6 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // Handle Sequelize ValidationError
   if (err.name === 'SequelizeValidationError') {
     const details = err.errors.map(e => ({
       field: e.path,
@@ -34,14 +31,12 @@ export const errorHandler = (err, req, res, next) => {
     });
   }
 
-  // Handle operational errors (AppError)
   if (err.isOperational) {
     return res.status(err.statusCode).json({
       error: err.message
     });
   }
 
-  // Handle unexpected errors
   res.status(500).json({
     error: 'Error interno del servidor'
   });

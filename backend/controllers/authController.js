@@ -31,7 +31,6 @@ export const register = async (req, res, next) => {
   try {
     const { nombre, email, password } = req.body;
 
-    // Check if email already exists
     const existing = await Usuario.findOne({
       where: sequelize.where(
         sequelize.fn('LOWER', sequelize.col('email')),

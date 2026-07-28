@@ -1,6 +1,3 @@
-# ============================================
-# Stage 1: Dependencies
-# ============================================
 FROM node:22-alpine AS deps
 
 RUN apk add --no-cache python3 make g++
@@ -11,22 +8,16 @@ COPY package.json package-lock.json ./
 
 RUN npm ci --omit=dev
 
-# ============================================
-# Stage 2: Runner
-# ============================================
 FROM node:22-alpine AS runner
 
 RUN apk add --no-cache tini curl
 
-# Create non-root user
 RUN addgroup -S berot && adduser -S berot -G berot
 
 WORKDIR /app
 
-# Copy node_modules from deps stage
 COPY --from=deps /app/node_modules ./node_modules
 
-# Copy application files
 COPY package.json .sequelizerc ./
 COPY server.js ./
 COPY config/ ./config/
@@ -38,10 +29,8 @@ COPY database/ ./database/
 COPY migrations/ ./migrations/
 COPY seeders/ ./seeders/
 
-# Create uploads directory with correct permissions
 RUN mkdir -p uploads && chown -R berot:berot /app
 
-# Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 

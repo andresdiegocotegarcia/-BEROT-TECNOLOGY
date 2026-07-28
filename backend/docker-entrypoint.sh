@@ -1,7 +1,6 @@
 #!/bin/sh
 set -e
 
-# Run migrations and seeders if RUN_MIGRATIONS is set to "true"
 if [ "$RUN_MIGRATIONS" = "true" ]; then
   echo "🔄 Running database migrations..."
   npx sequelize-cli db:migrate
@@ -10,5 +9,4 @@ if [ "$RUN_MIGRATIONS" = "true" ]; then
   echo "✅ Migrations and seeders completed"
 fi
 
-# Execute the main command
 exec "$@"

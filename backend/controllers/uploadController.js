@@ -8,7 +8,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const uploadsDir = path.join(__dirname, '..', 'uploads');
 
-// Ensure uploads directory exists
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
 }
@@ -25,9 +24,7 @@ export const upload = async (req, res, next) => {
 
     for (const base64Image of images) {
       const matches = base64Image.match(/^data:image\/(png|jpg|jpeg|gif|webp);base64,(.+)$/);
-      if (!matches) {
-        continue; // skip invalid images
-      }
+      if (!matches) continue;
 
       const extension = matches[1] === 'jpeg' ? 'jpg' : matches[1];
       const imageData = matches[2];

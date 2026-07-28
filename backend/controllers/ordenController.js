@@ -33,7 +33,6 @@ export const create = async (req, res, next) => {
       contrasena_equipo, fotos_recepcion
     } = req.body;
 
-    // Generate order number
     const maxId = await Orden.max('id') || 0;
     const nextNum = maxId + 1;
     const numero_orden = `ORD-${String(nextNum).padStart(3, '0')}`;
